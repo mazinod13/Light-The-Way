@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Share+Tech+Mono&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #000;
+  overflow: hidden;
+  width: 100vw; height: 100vh;
+  cursor: none;
+  font-family: 'Share Tech Mono', monospace;
+  user-select: none;
+}
+
+canvas {
+  display: block;
+  position: fixed;
+  top: 0; left: 0;
+}
+#ui-canvas { z-index: 10; pointer-events: none; }
+
+/* ── HUD ── */
+#hud {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 22px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
+}
+#hud-title {
+  font-family: 'Cinzel', serif;
+  font-size: .95rem; letter-spacing: .25em;
+  color: rgba(255,200,80,.65);
+}
+#hud-stats {
+  font-size: .7rem; letter-spacing: .14em;
+  color: rgba(255,255,255,.25);
+}
+#hud-stats span { color: rgba(255,200,80,.75); }
+
+/* ── SCREENS ── */
+.screen {
+  position: fixed; inset: 0; z-index: 30;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,.93); gap: 16px;
+}
+.screen h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem,5vw,3.2rem);
+  color: rgba(255,200,80,.9);
+  letter-spacing: .2em; text-align: center;
+}
+.screen p {
+  font-size: .8rem; letter-spacing: .15em;
+  color: rgba(255,255,255,.35);
+  text-align: center; max-width: 320px; line-height: 1.9;
+}
+.screen .sub {
+  font-size: .68rem; color: rgba(255,200,80,.35);
+  letter-spacing: .18em;
+}
+.btn {
+  margin-top: 8px; padding: 11px 36px;
+  border: 1px solid rgba(255,200,80,.4); background: transparent;
+  color: rgba(255,200,80,.85);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: .78rem; letter-spacing: .18em; text-transform: uppercase;
+  cursor: pointer; transition: all .2s;
+}
+.btn:hover {
+  background: rgba(255,200,80,.1);
+  border-color: rgba(255,200,80,.8);
+  box-shadow: 0 0 16px rgba(255,200,80,.2);
+}
+#win-screen h1   { color: #00ffcc; }
+#win-screen .btn { border-color: rgba(0,255,200,.4); color: rgba(0,255,200,.85); }
+#win-screen .btn:hover { background: rgba(0,255,200,.1); border-color: #00ffcc; }
+
+/* ── HINT ── */
+#hint {
+  position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+  z-index: 20; font-size: .62rem; letter-spacing: .14em;
+  color: rgba(255,255,255,.2); pointer-events: none;
+}
+
+/* ── MAIN-MENU TORCH ──────────────────────────────
+   The mouse acts as a torch that reveals the menu
+   content out of the dark. Press T to toggle it,
+   and after a few idle seconds a beam sweeps L→R.   */
+
+/* registered so they can be animated/transitioned */
+@property --torch-r { syntax: '<length>';     inherits: true; initial-value: 185px; }
+@property --sweep-x { syntax: '<percentage>'; inherits: true; initial-value: -25%; }
+
+#start-screen { gap: 26px; }
+
+#menu-content {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 16px;
+  --mx: 50%; --my: 50%;
+  --torch-r: 185px;
+  --sweep-x: -25%;
+  /* TORCH OFF (default): dark. The only thing that reveals content is
+     the idle beam sweeping the box left→right; at rest it sits off-screen
+     (--sweep-x: -25%) so nothing shows but the "PRESS T" prompt. */
+  -webkit-mask:
+    radial-gradient(22% 135% at var(--sweep-x) 50%,
+      #000 0%, #000 22%, rgba(0,0,0,.4) 55%, transparent 82%);
+          mask:
+    radial-gradient(22% 135% at var(--sweep-x) 50%,
+      #000 0%, #000 22%, rgba(0,0,0,.4) 55%, transparent 82%);
+}
+
+/* TORCH ON: the mouse is the torch — it reveals content where it hovers
+   (plus a faint ambient base). No auto sweep here. */
+#start-screen.torch-on #menu-content {
+  -webkit-mask:
+    radial-gradient(circle var(--torch-r) at var(--mx) var(--my),
+      #000 0%, #000 34%, rgba(0,0,0,.5) 66%, transparent 100%),
+    linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12));
+          mask:
+    radial-gradient(circle var(--torch-r) at var(--mx) var(--my),
+      #000 0%, #000 34%, rgba(0,0,0,.5) 66%, transparent 100%),
+    linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12));
+}
+
+#menu-content.sweeping { animation: menu-sweep 2.4s ease-in-out; }
+@keyframes menu-sweep {
+  from { --sweep-x: -25%; }
+  to   { --sweep-x: 125%; }
+}
+
+#menu-actions {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 14px;
+}
+
+/* the primary CTA stays hidden in the dark; the torch reveals it */
+#menu-actions .btn:not(.ghost) {
+  opacity: 0; pointer-events: none;
+  transition: opacity .55s ease;
+}
+#start-screen.torch-on #menu-actions .btn:not(.ghost) {
+  opacity: 1; pointer-events: auto;
+}
+
+.btn kbd {
+  font-family: inherit; font-size: .92em;
+  padding: 1px 6px; margin: 0 2px;
+  border: 1px solid rgba(255,200,80,.45); border-radius: 3px;
+  background: rgba(255,200,80,.08);
+}
+.btn.ghost {
+  margin-top: 0; padding: 9px 24px;
+  font-size: .66rem; letter-spacing: .18em;
+  border-color: rgba(255,200,80,.28);
+  color: rgba(255,200,80,.7);
+}
+.btn.ghost:hover { border-color: rgba(255,200,80,.6); color: rgba(255,200,80,.9); }
+
+/* in the dark the prompt is the only thing visible — let it breathe */
+#menu-torch-hint { animation: torch-prompt 2.6s ease-in-out infinite; }
+/* once lit, the prompt is gone — only the content + CTA remain (T still toggles) */
+#start-screen.torch-on #menu-torch-hint { display: none; }
+@keyframes torch-prompt {
+  0%, 100% { opacity: .5;  box-shadow: none; }
+  50%      { opacity: 1;   box-shadow: 0 0 18px rgba(255,200,80,.25); }
+}
+
+/* the visible flame that follows the cursor (only once lit) */
+#menu-torch {
+  position: fixed; top: 0; left: 0; z-index: 40;
+  width: 26px; height: 26px; border-radius: 50%;
+  opacity: 0;
+  pointer-events: none; will-change: transform;
+  transition: opacity .3s ease;
+  background: radial-gradient(circle,
+    rgba(255,225,150,.95) 0%,
+    rgba(255,180,70,.55) 35%,
+    rgba(255,150,40,0) 70%);
+  box-shadow: 0 0 42px 22px rgba(255,170,60,.22);
+}
+#start-screen.torch-on #menu-torch { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  #menu-content.sweeping { animation: none; }
+  #menu-content, #menu-torch-hint { animation: none; transition: none; }
+}
+
+/* ── CURSORS ───────────────────────────────────────
+   Menus get a normal cursor; the dramatic main menu
+   uses the flame when lit; the maze uses the torch.  */
+.screen { cursor: default; }
+#start-screen.torch-on { cursor: none; }
+
+/* ── HUD CONTROLS ──────────────────────────────────*/
+#hud-right { display: flex; align-items: center; gap: 18px; }
+#hud-buttons { display: flex; gap: 8px; pointer-events: auto; }
+.icon-btn {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,200,80,.3); border-radius: 4px;
+  background: rgba(0,0,0,.35);
+  color: rgba(255,200,80,.8);
+  font-size: .85rem; line-height: 1; cursor: pointer;
+  transition: all .15s;
+}
+.icon-btn:hover { background: rgba(255,200,80,.15); border-color: rgba(255,200,80,.7); }
+
+/* ── SHARED button column (win / pause) ────────────*/
+.menu-actions {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 14px; margin-top: 4px;
+}
+
+/* ── LEVEL SELECT ──────────────────────────────────*/
+#level-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 84px);
+  gap: 14px; margin: 10px 0 6px;
+}
+.level-card {
+  width: 84px; height: 84px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 5px;
+  border: 1px solid rgba(255,200,80,.35);
+  background: rgba(255,200,80,.04);
+  color: rgba(255,200,80,.85);
+  font-family: inherit; cursor: pointer;
+  transition: transform .15s, box-shadow .15s, background .15s, border-color .15s;
+}
+.level-card:hover:not(.locked) {
+  background: rgba(255,200,80,.12);
+  border-color: rgba(255,200,80,.8);
+  box-shadow: 0 0 16px rgba(255,200,80,.2);
+  transform: translateY(-2px);
+}
+.level-card.locked {
+  border-color: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.02);
+  color: rgba(255,255,255,.2);
+  cursor: not-allowed;
+}
+.level-card.endless { border-style: dashed; }
+.lc-num   { font-size: 1.4rem; font-family: 'Cinzel', serif; }
+.lc-name  { font-size: .5rem; letter-spacing: .1em; opacity: .6; text-transform: uppercase; }
+.lc-stars { font-size: .6rem; letter-spacing: 1px; }
+.lc-stars span { color: rgba(255,255,255,.15); }
+.lc-stars span.on { color: #ffd24a; }
+.lc-lock  { font-size: 1.3rem; }
+
+/* ── STAR RATING (win) ─────────────────────────────*/
+.stars { font-size: 2rem; letter-spacing: 8px; margin: 2px 0; }
+.stars span { color: rgba(255,255,255,.15); }
+.stars span.on { color: #ffd24a; text-shadow: 0 0 14px rgba(255,210,74,.6); }
+#win-screen .record {
+  color: #ffd24a; font-size: .72rem; letter-spacing: .25em;
+  animation: torch-prompt 1.6s ease-in-out infinite;
+}
+
+/* ── SETTINGS ──────────────────────────────────────*/
+.settings-list {
+  display: flex; flex-direction: column; gap: 14px;
+  width: 340px; max-width: 86vw; margin: 8px 0;
+}
+.set-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  font-size: .72rem; letter-spacing: .12em;
+  color: rgba(255,255,255,.6); text-transform: uppercase;
+}
+.toggle {
+  min-width: 64px; padding: 7px 14px;
+  border: 1px solid rgba(255,200,80,.3); background: transparent;
+  color: rgba(255,255,255,.4);
+  font-family: inherit; font-size: .68rem; letter-spacing: .12em;
+  cursor: pointer; transition: all .15s;
+}
+.toggle.on {
+  color: rgba(255,200,80,.95); border-color: rgba(255,200,80,.7);
+  box-shadow: 0 0 10px rgba(255,200,80,.15);
+}
+.toggle.danger { border-color: rgba(255,90,90,.4); color: rgba(255,120,120,.8); }
+.toggle.danger:hover { background: rgba(255,90,90,.12); border-color: rgba(255,90,90,.8); }
+.segmented { display: flex; }
+.seg {
+  padding: 7px 12px;
+  border: 1px solid rgba(255,200,80,.25); border-right: none;
+  background: transparent; color: rgba(255,255,255,.4);
+  font-family: inherit; font-size: .64rem; letter-spacing: .1em;
+  cursor: pointer; transition: all .15s;
+}
+.seg:last-child { border-right: 1px solid rgba(255,200,80,.25); }
+.seg.active { background: rgba(255,200,80,.15); color: rgba(255,200,80,.95); }

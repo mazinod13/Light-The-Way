@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Light the Way</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <canvas id="game-canvas"></canvas>
+  <canvas id="ui-canvas"></canvas>
+
+  <!-- ── HUD (only during a level) ── -->
+  <div id="hud">
+    <div id="hud-title">Light the Way</div>
+    <div id="hud-right">
+      <div id="hud-stats">
+        Lvl <span id="s-lvl">1</span> · Steps <span id="s-steps">0</span> · Best <span id="s-best">—</span>
+      </div>
+      <div id="hud-buttons">
+        <button class="icon-btn" id="btn-mute"    title="Mute">🔊</button>
+        <button class="icon-btn" id="btn-restart" title="Restart (R)">↻</button>
+        <button class="icon-btn" id="btn-pause"   title="Pause (Esc)">⏸</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN MENU ── -->
+  <div class="screen" id="start-screen">
+    <div id="menu-content">
+      <h1>Light the Way</h1>
+      <p>Move your mouse — your torch leads the way.<br>The wanderer follows the light through the dark.</p>
+      <p class="sub">MOVE MOUSE TO GUIDE · FIND THE EXIT ◈</p>
+    </div>
+    <div id="menu-actions">
+      <button class="btn" id="btn-play">Enter the Dark</button>
+      <button class="btn" id="btn-levels">Level Select</button>
+      <button class="btn" id="btn-settings">Settings</button>
+      <button class="btn ghost" id="menu-torch-hint" type="button">PRESS <kbd>T</kbd> FOR TORCH</button>
+    </div>
+    <div id="menu-torch" aria-hidden="true"></div>
+  </div>
+
+  <!-- ── LEVEL SELECT ── -->
+  <div class="screen" id="levels-screen" style="display:none">
+    <h1>Choose Your Depth</h1>
+    <p class="sub">★ <span id="levels-total">0</span> / <span id="levels-max">36</span> collected</p>
+    <div id="level-grid"></div>
+    <button class="btn ghost" id="btn-levels-back">← Back</button>
+  </div>
+
+  <!-- ── SETTINGS ── -->
+  <div class="screen" id="settings-screen" style="display:none">
+    <h1>Settings</h1>
+    <div class="settings-list">
+      <div class="set-row"><span>Sound effects</span><button class="toggle" id="set-sound">ON</button></div>
+      <div class="set-row"><span>Ambient music</span><button class="toggle" id="set-music">ON</button></div>
+      <div class="set-row"><span>Difficulty</span>
+        <div id="set-diff" class="segmented">
+          <button class="seg" data-diff="easy">Easy</button>
+          <button class="seg" data-diff="normal">Normal</button>
+          <button class="seg" data-diff="hard">Hard</button>
+        </div>
+      </div>
+      <div class="set-row"><span>Progress</span><button class="toggle danger" id="btn-reset">RESET</button></div>
+    </div>
+    <button class="btn ghost" id="btn-settings-back">← Back</button>
+  </div>
+
+  <!-- ── WIN ── -->
+  <div class="screen" id="win-screen" style="display:none">
+    <h1>Escaped</h1>
+    <div id="w-stars" class="stars"></div>
+    <p class="record" id="w-record">✦ NEW BEST ✦</p>
+    <p>Cleared in <span id="w-steps">0</span> steps · Best <span id="w-best">0</span></p>
+    <div class="menu-actions">
+      <button class="btn" id="btn-next">Go Deeper →</button>
+      <button class="btn" id="btn-replay">Replay</button>
+      <button class="btn ghost" id="btn-win-levels">Level Select</button>
+    </div>
+  </div>
+
+  <!-- ── PAUSE ── -->
+  <div class="screen" id="pause-screen" style="display:none">
+    <h1>Paused</h1>
+    <div class="menu-actions">
+      <button class="btn" id="btn-resume">Resume</button>
+      <button class="btn" id="btn-restart-2">Restart Level</button>
+      <button class="btn ghost" id="btn-pause-levels">Level Select</button>
+      <button class="btn ghost" id="btn-pause-menu">Main Menu</button>
+    </div>
+  </div>
+
+  <div id="hint">move your mouse to guide the wanderer · ESC to pause · R to restart</div>
+
+  <!-- load order matters -->
+  <script src="js/config.js"></script>
+  <script src="js/mazes.js"></script>
+  <script src="js/maze-gen.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/pathfinder.js"></script>
+  <script src="js/character.js"></script>
+  <script src="js/torch.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/menu.js"></script>
+
+</body>
+</html>
