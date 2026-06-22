@@ -1,4 +1,4 @@
-# 🔦 Light the Way
+# Light the Way
 
 > Move your mouse — your torch leads the way. The wanderer follows the light through the dark.
 
@@ -6,7 +6,7 @@ A minimalist, atmospheric maze game built with **vanilla JavaScript + HTML5 Canv
 
 ---
 
-## ✨ Features
+## Features
 
 ### Atmospheric main menu
 - **Starts completely dark** — only a pulsing `PRESS T FOR TORCH` prompt is visible.
@@ -29,7 +29,7 @@ A minimalist, atmospheric maze game built with **vanilla JavaScript + HTML5 Canv
   - ★★☆ — within ~160%
   - ★☆☆ — cleared it
 - **Best (fewest) steps** saved per level.
-- **Unlocks** — clearing a level unlocks the next; locked levels show 🔒.
+- **Unlocks** — clearing a level unlocks the next; locked levels are greyed out.
 - **"NEW BEST"** celebration on the win screen when you beat your record.
 - Everything **persists** in `localStorage` (survives refresh).
 
@@ -43,7 +43,7 @@ A minimalist, atmospheric maze game built with **vanilla JavaScript + HTML5 Canv
 All audio is synthesised live with the **Web Audio API**:
 - footsteps, UI clicks, a win arpeggio, an error/deny buzz
 - a slow two‑note **ambient drone** during play
-- HUD mute button (🔊/🔇) and independent Sound / Music toggles in Settings
+- HUD mute button and independent Sound / Music toggles in Settings
 - audio is unlocked on the first click/keypress (browser autoplay‑policy safe)
 
 ### Difficulty
@@ -59,7 +59,7 @@ The torch **also shrinks with depth** (−10px per level, floored at 90px), so d
 
 ---
 
-## 🎮 Controls
+## Controls
 
 | Input | Action |
 |-------|--------|
@@ -67,11 +67,11 @@ The torch **also shrinks with depth** (−10px per level, floored at 90px), so d
 | **`T`** | Toggle the torch on the main menu |
 | **`Esc`** | Pause / resume |
 | **`R`** | Restart the current level |
-| HUD ⏸ / ↻ / 🔊 | Pause / Restart / Mute |
+| HUD buttons | Pause / Restart / Mute |
 
 ---
 
-## 🚀 Running it
+## Running it
 
 It's a fully static site — no dependencies, no build.
 
@@ -93,7 +93,7 @@ Then visit `http://localhost:8000`.
 
 ---
 
-## 🧱 Project structure
+## Project structure
 
 ```
 light-the-way/
@@ -138,7 +138,7 @@ light-the-way/
 
 ---
 
-## 🛠️ Customizing
+## Customizing
 
 All quick knobs live in **`js/config.js`**:
 
@@ -173,7 +173,7 @@ const CONFIG = {
 
 ---
 
-## 🧩 How it works (in brief)
+## How it works (in brief)
 
 1. **Two stacked canvases.** `#game-canvas` draws the maze, exit, and character in world space (camera keeps the wanderer centered). `#ui-canvas` paints a full‑screen black overlay and "cuts" a soft radial hole at the cursor — that hole *is* the torchlight.
 2. **Pointing = pathfinding.** On `mousemove`, the screen point is converted to a maze cell; BFS finds the shortest path from the wanderer to it; the character walks the queued cells.
@@ -182,7 +182,7 @@ const CONFIG = {
 
 ---
 
-## 📦 Tech stack
+## Tech stack
 
 - Vanilla **JavaScript** (no frameworks, no bundler)
 - **HTML5 Canvas 2D**
@@ -192,4 +192,4 @@ const CONFIG = {
 
 ---
 
-*Built as part of a portfolio. Guide the wanderer. Mind the dark.* 🕯️
+*Built as part of a portfolio. Guide the wanderer. Mind the dark.*

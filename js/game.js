@@ -211,7 +211,7 @@ function buildLevelGrid() {
         `<span class="lc-name">${Levels.name(i)}</span>`;
       card.addEventListener('click', () => { Sound.click(); playLevel(i); });
     } else {
-      card.innerHTML = `<span class="lc-lock">🔒</span>`;
+      card.innerHTML = `<span class="lc-num">${i + 1}</span><span class="lc-name">Locked</span>`;
     }
     grid.appendChild(card);
   }
@@ -333,7 +333,11 @@ function toggleMute() {
 function updateMute() {
   const on = Save.settings().sound;
   const btn = $('btn-mute');
-  if (btn) { btn.textContent = on ? '🔊' : '🔇'; btn.title = on ? 'Mute' : 'Unmute'; }
+  if (btn) {
+    btn.textContent = on ? 'SOUND' : 'MUTED';
+    btn.classList.toggle('off', !on);
+    btn.title = on ? 'Mute' : 'Unmute';
+  }
 }
 
 init();

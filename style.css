@@ -197,15 +197,16 @@ canvas {
 #hud-right { display: flex; align-items: center; gap: 18px; }
 #hud-buttons { display: flex; gap: 8px; pointer-events: auto; }
 .icon-btn {
-  width: 30px; height: 30px;
+  height: 28px; padding: 0 12px;
   display: flex; align-items: center; justify-content: center;
   border: 1px solid rgba(255,200,80,.3); border-radius: 4px;
   background: rgba(0,0,0,.35);
   color: rgba(255,200,80,.8);
-  font-size: .85rem; line-height: 1; cursor: pointer;
-  transition: all .15s;
+  font-family: inherit; font-size: .58rem; letter-spacing: .12em;
+  line-height: 1; cursor: pointer; transition: all .15s;
 }
 .icon-btn:hover { background: rgba(255,200,80,.15); border-color: rgba(255,200,80,.7); }
+.icon-btn.off { color: rgba(255,255,255,.35); border-color: rgba(255,255,255,.15); }
 
 /* ── SHARED button column (win / pause) ────────────*/
 .menu-actions {
@@ -247,7 +248,6 @@ canvas {
 .lc-stars { font-size: .6rem; letter-spacing: 1px; }
 .lc-stars span { color: rgba(255,255,255,.15); }
 .lc-stars span.on { color: #ffd24a; }
-.lc-lock  { font-size: 1.3rem; }
 
 /* ── STAR RATING (win) ─────────────────────────────*/
 .stars { font-size: 2rem; letter-spacing: 8px; margin: 2px 0; }
