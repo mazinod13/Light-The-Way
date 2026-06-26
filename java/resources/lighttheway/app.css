@@ -1,0 +1,102 @@
+/* Light the Way — JavaFX theme (port of style.css). */
+
+.root { -fx-font-family: 'Consolas', 'Share Tech Mono', monospace; }
+
+/* ── screens ── */
+.screen { -fx-background-color: rgba(0,0,0,0.93); }
+
+.title {
+    -fx-font-family: 'Cinzel', 'Georgia', serif;
+    -fx-font-size: 40px;
+    -fx-text-fill: rgba(255,200,80,0.9);
+}
+.title.cyan { -fx-text-fill: #00ffcc; }
+
+.desc {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255,255,255,0.4);
+    -fx-text-alignment: center;
+}
+.sub { -fx-font-size: 11px; -fx-text-fill: rgba(255,200,80,0.45); }
+
+/* ── buttons ── */
+.btn, .btn-ghost {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-width: 1;
+    -fx-border-color: rgba(255,200,80,0.4);
+    -fx-text-fill: rgba(255,200,80,0.85);
+    -fx-font-size: 13px;
+    -fx-padding: 9 30 9 30;
+    -fx-cursor: hand;
+}
+.btn:hover { -fx-background-color: rgba(255,200,80,0.10); -fx-border-color: rgba(255,200,80,0.8); }
+.btn-ghost {
+    -fx-border-color: rgba(255,200,80,0.25);
+    -fx-text-fill: rgba(255,200,80,0.6);
+    -fx-font-size: 11px;
+    -fx-padding: 8 22 8 22;
+}
+.btn-ghost:hover { -fx-border-color: rgba(255,200,80,0.6); -fx-text-fill: rgba(255,200,80,0.9); }
+
+/* ── level select ── */
+.level-card {
+    -fx-min-width: 84; -fx-pref-width: 84; -fx-max-width: 84;
+    -fx-min-height: 84; -fx-pref-height: 84; -fx-max-height: 84;
+    -fx-background-color: rgba(255,200,80,0.04);
+    -fx-border-color: rgba(255,200,80,0.35); -fx-border-width: 1;
+    -fx-cursor: hand;
+}
+.level-card:hover { -fx-background-color: rgba(255,200,80,0.12); -fx-border-color: rgba(255,200,80,0.8); }
+.level-card.endless { -fx-border-color: rgba(255,200,80,0.22); }
+.level-card.locked {
+    -fx-background-color: rgba(255,255,255,0.02);
+    -fx-border-color: rgba(255,255,255,0.08);
+    -fx-cursor: default;
+}
+.lc-num   { -fx-font-family: 'Cinzel', serif; -fx-font-size: 22px; -fx-text-fill: rgba(255,200,80,0.85); }
+.level-card.locked .lc-num { -fx-text-fill: rgba(255,255,255,0.2); }
+.lc-name  { -fx-font-size: 8px;  -fx-text-fill: rgba(255,200,80,0.5); }
+.level-card.locked .lc-name { -fx-text-fill: rgba(255,255,255,0.2); }
+.lc-stars { -fx-font-size: 10px; -fx-text-fill: #ffd24a; }
+
+/* ── settings ── */
+.set-row   { -fx-padding: 0; }
+.set-label { -fx-text-fill: rgba(255,255,255,0.6); -fx-font-size: 12px; }
+.toggle {
+    -fx-background-color: transparent; -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-border-color: rgba(255,200,80,0.3); -fx-border-width: 1;
+    -fx-font-size: 11px; -fx-padding: 6 16 6 16; -fx-cursor: hand;
+}
+.toggle .label { -fx-text-fill: rgba(255,255,255,0.4); -fx-font-size: 11px; }
+.toggle.on { -fx-border-color: rgba(255,200,80,0.7); }
+.toggle.on .label { -fx-text-fill: rgba(255,200,80,0.95); }
+.toggle.danger { -fx-border-color: rgba(255,90,90,0.4); -fx-text-fill: rgba(255,120,120,0.8); }
+.toggle.danger:hover { -fx-background-color: rgba(255,90,90,0.12); -fx-border-color: rgba(255,90,90,0.8); }
+.segmented { -fx-spacing: 0; }
+.seg {
+    -fx-background-color: transparent; -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-border-color: rgba(255,200,80,0.25); -fx-border-width: 1;
+    -fx-text-fill: rgba(255,255,255,0.4); -fx-font-size: 11px;
+    -fx-padding: 6 12 6 12; -fx-cursor: hand;
+}
+.seg.active { -fx-background-color: rgba(255,200,80,0.15); -fx-text-fill: rgba(255,200,80,0.95); }
+
+/* ── win ── */
+.stars  { -fx-font-size: 30px; -fx-text-fill: #ffd24a; }
+.record { -fx-text-fill: #ffd24a; -fx-font-size: 12px; }
+
+/* ── HUD ── */
+.hud { -fx-background-color: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent); }
+.hud-title { -fx-font-family: 'Cinzel', serif; -fx-text-fill: rgba(255,200,80,0.65); -fx-font-size: 15px; }
+.hud-stats { -fx-text-fill: rgba(255,255,255,0.3); -fx-font-size: 11px; }
+.hud-num   { -fx-text-fill: rgba(255,200,80,0.75); -fx-font-size: 11px; }
+.icon-btn {
+    -fx-background-color: rgba(0,0,0,0.35); -fx-background-radius: 4; -fx-border-radius: 4;
+    -fx-border-color: rgba(255,200,80,0.3); -fx-border-width: 1;
+    -fx-text-fill: rgba(255,200,80,0.8); -fx-font-size: 10px;
+    -fx-padding: 5 10 5 10; -fx-cursor: hand;
+}
+.icon-btn:hover { -fx-background-color: rgba(255,200,80,0.15); -fx-border-color: rgba(255,200,80,0.7); }
+.icon-btn.off { -fx-text-fill: rgba(255,255,255,0.35); -fx-border-color: rgba(255,255,255,0.15); }
